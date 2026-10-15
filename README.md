@@ -18,6 +18,9 @@ As vendedoras são cadastradas pelo admin dentro do sistema. Mesmo que alguém s
 
 ## Comandos
 
+> **Atenção:** `test:rls`, `test:fluxo`, `test:tela`, `test:fases45` e `pdfs:dulcinea` criam e apagam usuárias, documentos e versões do modelo no banco do `.env.local`. **Não rode contra o banco de produção.** Use um projeto Supabase de testes.
+
+
 | Comando | O que faz |
 | --- | --- |
 | `npm run dev` | Servidor de desenvolvimento |

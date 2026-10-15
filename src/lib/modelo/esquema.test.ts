@@ -11,6 +11,11 @@ describe("validação do modelo", () => {
     expect(problemasDoModelo(MODELO_PADRAO)).toEqual([]);
   });
 
+  it("salvar não descarta nenhum texto do modelo", () => {
+    const r = esquemaModelo.safeParse(MODELO_PADRAO);
+    expect(Object.keys(r.data!.textos).sort()).toEqual(Object.keys(MODELO_PADRAO.textos).sort());
+  });
+
   it("aponta variável inexistente com o campo", () => {
     const m = copia();
     m.textos.titulo_primeiro = "{proprietaria}, oi {lojaa}";

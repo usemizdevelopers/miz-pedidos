@@ -14,7 +14,8 @@ const card = z.object({ titulo: texto(40).min(1, "Título do card vazio."), subt
 /** Arquivo do protótipo (/modelo/x) ou upload do admin no bucket (modelo/x). */
 const caminho = z.string().regex(/^\/?modelo\/[\w.-]+$/, "Imagem inválida.");
 
-const chavesTexto = Object.keys(MODELO_PADRAO.textos).filter((k) => !k.startsWith("passos")) as (keyof ModeloPdf["textos"])[];
+// "passos" e "passos_sem_reservado" são listas (validadas abaixo); "passos_titulo" é texto comum
+const chavesTexto = Object.keys(MODELO_PADRAO.textos).filter((k) => k !== "passos" && k !== "passos_sem_reservado") as (keyof ModeloPdf["textos"])[];
 
 export const esquemaModelo = z.object({
   textos: z.object({
