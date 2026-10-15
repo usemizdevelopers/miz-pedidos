@@ -44,3 +44,6 @@ next-env.d.ts
 # prints dos testes de tela
 /prints
 /pdfs
+
+# Supabase CLI
+/supabase/.temp
