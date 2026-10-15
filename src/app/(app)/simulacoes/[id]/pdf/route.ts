@@ -2,7 +2,7 @@ import { NextResponse, type NextRequest } from "next/server";
 import { obterPerfil } from "@/lib/auth";
 import { carregarDocumento } from "@/lib/documentos";
 import { nomeArquivo, type Formato } from "@/lib/impressao";
-import { gerarPdf } from "@/lib/pdf/gerar";
+import { gerarPdf, origemInterna } from "@/lib/pdf/gerar";
 
 export const runtime = "nodejs";
 export const maxDuration = 60;
@@ -17,7 +17,7 @@ export async function GET(request: NextRequest, ctx: RouteContext<"/simulacoes/[
   if (!carregado) return NextResponse.json({ erro: "Documento não encontrado." }, { status: 404 });
 
   const { pdf } = await gerarPdf({
-    origem: request.nextUrl.origin,
+    origem: origemInterna(request.nextUrl.origin),
     documentoId: id,
     formato,
     cookies: request.cookies.getAll(),

@@ -1,0 +1,12 @@
+# Segredos nunca entram na imagem
+.env*
+!.env.example
+
+node_modules
+.next
+.git
+prints
+pdfs
+supabase/.temp
+*.log
+*.tsbuildinfo

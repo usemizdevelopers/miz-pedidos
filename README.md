@@ -42,10 +42,20 @@ As vendedoras são cadastradas pelo admin dentro do sistema. Mesmo que alguém s
 - Fotos e logo de `public/modelo/` são do protótipo, extraídos do PDF do Canva. Os definitivos vêm do upload do admin (Fase 4).
 - Fonte cursiva: Mrs Saint Delafield (Google Fonts), no lugar da Hello Paris Script do Canva.
 - Editor do modelo: `/admin/modelo`. Cada salvamento cria uma versão (`modelo_pdf_versoes`); a simulação grava a versão vigente ao ser salva e o pedido confirmado mantém a dela.
-- Deploy na Vercel: trocar o Chromium local pelo `@sparticuz/chromium` em `gerar.ts`.
 
 ## Regras importantes
 
 - Dinheiro sempre em **centavos inteiros** (`preco_centavos`, `total_centavos`…). Formatação só na exibição (`src/lib/dinheiro.ts`).
 - A segurança fica no banco (RLS em todas as tabelas). As server actions também checam o papel, mas isso é uma camada extra.
 - A secret key (`SUPABASE_SECRET_KEY`) só é usada no servidor, para gerenciar usuários no Auth (`src/lib/supabase/admin.ts`).
+
+## Deploy (EasyPanel + Cloudflare)
+
+O `Dockerfile` gera a imagem com o Next em modo standalone e o Chromium (headless shell) para os PDFs.
+
+1. EasyPanel → serviço **App** → origem **GitHub** (`usemizdevelopers/miz-pedidos`, branch `main`) → build **Dockerfile**.
+2. Variável de ambiente obrigatória: `SUPABASE_SECRET_KEY`. A URL e a publishable key do Supabase já vêm no `Dockerfile`. Para trocar, use "build args" com os mesmos nomes.
+3. Domínio no EasyPanel apontando para a **porta 3000**. Reserve pelo menos 1 GB de memória (o Chromium usa bastante).
+4. Cloudflare: registro A do domínio → IP do servidor. Comece como "DNS only" até o EasyPanel emitir o certificado. Depois ative o proxy (nuvem laranja) com SSL/TLS em **Full (strict)**.
+
+O gerador de PDF abre a página de impressão pelo endereço interno do contêiner (`http://127.0.0.1:3000`), sem passar pela Cloudflare. Para mudar, use `PDF_ORIGEM_INTERNA`.

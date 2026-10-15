@@ -7,13 +7,24 @@ let navegador: Promise<Browser> | null = null;
 
 function obterNavegador(): Promise<Browser> {
   if (!navegador) {
-    navegador = chromium.launch({ headless: true }).then((b) => {
+    // /dev/shm é pequeno em contêiner: sem essa flag o Chromium pode travar em PDFs grandes
+    navegador = chromium.launch({ headless: true, args: ["--disable-dev-shm-usage"] }).then((b) => {
       b.on("disconnected", () => (navegador = null));
       return b;
     });
     navegador.catch(() => (navegador = null));
   }
   return navegador;
+}
+
+/**
+ * Endereço que o Chromium usa para abrir a página de impressão. Em produção é o próprio
+ * contêiner (não sai pela Cloudflare nem depende do domínio); em dev, o endereço da requisição.
+ */
+export function origemInterna(origemDaRequisicao: string): string {
+  if (process.env.PDF_ORIGEM_INTERNA) return process.env.PDF_ORIGEM_INTERNA;
+  if (process.env.NODE_ENV === "production") return `http://127.0.0.1:${process.env.PORT ?? 3000}`;
+  return origemDaRequisicao;
 }
 
 const VIEWPORT: Record<Formato, { width: number; height: number }> = {
