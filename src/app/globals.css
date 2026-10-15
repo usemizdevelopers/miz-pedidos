@@ -1,0 +1,47 @@
+@import "tailwindcss";
+
+/* Paleta Miz (referência: PDF do Canva) */
+@theme {
+  --color-fundo: #f7f5f0;
+  --color-cartao: #ffffff;
+  --color-linha: #e3ded6;
+  --color-taupe: #998f84;
+  --color-taupe-escuro: #6f665d;
+  --color-texto: #3f3a35;
+  --color-suave: #8a8178;
+  --color-erro: #a23b2a;
+  --color-ok: #4f6b3a;
+  --font-sans: var(--font-quicksand), ui-sans-serif, system-ui, sans-serif;
+}
+
+body {
+  background: var(--color-fundo);
+  color: var(--color-texto);
+}
+
+@layer components {
+  .campo {
+    @apply w-full rounded-lg border border-linha bg-cartao px-3 py-2 text-sm text-texto outline-none transition focus:border-taupe focus:ring-2 focus:ring-taupe/20 disabled:opacity-60;
+  }
+  .rotulo {
+    @apply mb-1 block text-xs font-semibold uppercase tracking-wide text-suave;
+  }
+  .botao {
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-taupe px-5 py-2 text-sm font-semibold text-white transition hover:bg-taupe-escuro disabled:cursor-not-allowed disabled:opacity-60;
+  }
+  .botao-contorno {
+    @apply inline-flex items-center justify-center gap-2 rounded-full border border-taupe px-4 py-1.5 text-sm font-medium text-taupe-escuro transition hover:bg-taupe/10 disabled:cursor-not-allowed disabled:opacity-60;
+  }
+  .cartao {
+    @apply rounded-2xl border border-linha bg-cartao p-5;
+  }
+  .tabela {
+    @apply w-full text-left text-sm;
+  }
+  .tabela th {
+    @apply border-b border-linha px-3 py-2 text-xs font-semibold uppercase tracking-wide text-suave;
+  }
+  .tabela td {
+    @apply border-b border-linha px-3 py-2 align-middle;
+  }
+}

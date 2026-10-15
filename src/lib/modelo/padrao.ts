@@ -1,0 +1,83 @@
+import type { ModeloPdf } from "./tipos";
+
+/** Modelo inicial (versão 1), fiel ao PDF de referência feito no Canva. */
+export const MODELO_PADRAO: ModeloPdf = {
+  textos: {
+    cabecalho_titulo: "Proposta exclusiva",
+    cabecalho_loja: "**{loja}** | {cidade_uf}",
+    selo_primeiro: "Seu primeiro pedido",
+    selo_recompra: "Sua recompra",
+    preparada_por: "Preparada por {vendedora}",
+    validade: "Válida até {validade}",
+    titulo_primeiro: "{proprietaria},\nteste a Miz na sua arara.\n**O risco é nosso.**",
+    titulo_recompra: "{proprietaria},\nsua arara pede reposição.\n**A gente já separou.**",
+    condicoes_titulo_primeiro: "**Três condições** só\npara o primeiro pedido:",
+    condicoes_titulo_recompra: "**Condições** da\nsua recompra:",
+    frase_impacto: "**Sua cliente** já procura básico premium. A questão é se **ela vai encontrar na sua arara.**",
+    legenda_foto: "Lojista Miz não compra estoque.\n**Compra giro.**",
+    assinatura: "use mais de você. use miz.",
+    na_peca_titulo: "Na peça",
+    na_parceria_titulo: "Na parceria",
+    conta_titulo: "A conta do lucro",
+    lucro_titulo: "Na {lucro_na_peca}ª peça vendida,\nvocê já tem **lucro.**",
+    retorno: "**Cada R$ 1,00** que\nvocê investe na Miz **volta\ncomo R$ {retorno_por_real}** no seu caixa.",
+    nota_estimativa: "Estimativa com etiqueta a **{markup}x o atacado**,\nantes de impostos e custos da loja.",
+    lema: "Use mais de você. Use Miz.",
+    pedido_titulo: "Seu pedido,\n**pronto para confirmar**",
+    nota_legal: "Prazo confirmado após o pedido · Expedição de {expedicao} · Exclusivo para a loja {loja} · Não compartilhe com clientes finais",
+    reservado_titulo: "**Reservado** para você",
+    reservado_nota: "Chega em **{previsao}**. Você só paga na chegada.",
+    rodape: "Documento exclusivo para {loja}. Preços de atacado: não compartilhe com clientes finais.",
+    confirmado_cabecalho: "Pedido confirmado",
+    confirmado_selo: "Pedido confirmado",
+    confirmado_titulo: "{proprietaria},\nseu pedido está **confirmado.**",
+    confirmado_subtitulo: "Confira os itens e responda **“Tudo certo”** para faturarmos.",
+    confirmado_imediato_titulo: "**Envio imediato**",
+    confirmado_imediato_nota: "Despacho em até {despacho_horas}h após o pagamento, de {expedicao}.",
+    pagamentos_titulo: "**Seus pagamentos**",
+    passos_titulo: "**Próximos passos**",
+    passos: [
+      "Você confere e responde **“Tudo certo”**.",
+      "Você paga, a gente fatura e **despacha em até {despacho_horas}h** de {expedicao}.",
+      "O reservado chega, **você paga e a gente despacha**.",
+    ],
+    passos_sem_reservado: [
+      "Você confere e responde **“Tudo certo”**.",
+      "Você paga, a gente fatura e **despacha em até {despacho_horas}h** de {expedicao}.",
+      "Chegou? **Poste o material pronto** e venda.",
+    ],
+    completo_titulo: "Pedido completo",
+    botao: "Confira e responda “Tudo certo”",
+  },
+  condicoes_primeiro: [
+    { titulo: "Sem pedido mínimo", subtitulo: "Comece com a grade, se quiser." },
+    { titulo: "Frete por nossa conta", subtitulo: "De {expedicao} até a sua loja." },
+    { titulo: "Até {parcelas_max}x sem juros", subtitulo: "Pelo mesmo valor do à vista." },
+  ],
+  condicoes_recompra: [
+    { titulo: "Sem pedido mínimo", subtitulo: "Grade fechada, no seu ritmo." },
+    { titulo: "Frete grátis", subtitulo: "Em pedidos a partir de {frete_minimo}." },
+    { titulo: "Até {parcelas_max}x sem juros", subtitulo: "Pelo mesmo valor do à vista." },
+  ],
+  chips_na_peca: ["costura embutida", "acabamento de importada", "cores que combinam", "toque premium"],
+  cards_na_parceria: [
+    { titulo: "Nunca vendemos no varejo", subtitulo: "Cliente que procura a Miz **vai para a sua loja.**" },
+    { titulo: "Material pronto", subtitulo: "Fotos e vídeos para postar no dia que chega." },
+    { titulo: "App Miz · 01/11", subtitulo: "Cursos, IA e leads da sua região." },
+  ],
+  imagens: {
+    logo: "/modelo/logo.png",
+    foto_principal: "/modelo/foto-principal.jpg",
+    foto_polaroide: "/modelo/foto-polaroide.jpg",
+    moldura_polaroide: "/modelo/moldura-polaroide.png",
+    clipe: "/modelo/clipe.png",
+    polaroides_modo: "automatico",
+    polaroides_fixas: ["/modelo/polaroide-1.jpg", "/modelo/polaroide-2.jpg", "/modelo/polaroide-3.jpg"],
+  },
+  mensagens: {
+    whatsapp_simulacao:
+      "{proprietaria}, montei o mix da {loja} e coloquei a conta no PDF. Você investe {total_pedido} e isso vira {venda_estimada} na etiqueta. Válido até {validade}. Tem alguma cor ou modelo que você trocaria?",
+    whatsapp_pedido:
+      "{proprietaria}, segue seu pedido nº {numero_pedido} para conferir. Envio imediato: {parcelas}x de {parcela_imediato}. Assim que você responder \"Tudo certo\" e pagar, faturamos e despachamos em até 24h.",
+  },
+};

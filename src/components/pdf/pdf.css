@@ -1,0 +1,328 @@
+/* =============================================================
+   PDFs Miz. A4: medidas em pt tiradas do PDF de referência (Canva).
+   Celular: 390×845 px por página, fonte mínima 9 px.
+   ============================================================= */
+
+.pdf {
+  --taupe: #999085;
+  --fundo: #f7f6f3;
+  --linha: #d1ccc7;
+  --cursiva-clara: #e6e3db;
+  color: var(--taupe);
+  font-family: var(--font-quicksand), sans-serif;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+.pdf strong { font-weight: 700; }
+.pdf p, .pdf h1, .pdf h2, .pdf h3 { margin: 0; }
+.cursiva { font-family: var(--font-cursiva), cursive; font-weight: 400; }
+
+/* ---------------------------------------------------------- folhas */
+.pdf-tela { background: #e9e6e0; padding: 24px 0; min-height: 100vh; }
+.pdf-tela .folha { margin: 0 auto 24px; box-shadow: 0 2px 16px rgb(0 0 0 / 0.12); }
+.folha {
+  position: relative;
+  background: var(--fundo);
+  overflow: hidden;
+  break-after: page;
+  display: flex;
+  flex-direction: column;
+}
+.folha:last-child { break-after: auto; }
+.folha > .conteudo { flex: 1; overflow: hidden; position: relative; }
+.folha-inteira > .conteudo { position: absolute; inset: 0; padding: 0 !important; }
+.rodape { position: absolute; left: 0; right: 0; text-align: center; display: flex; justify-content: center; align-items: baseline; }
+.pg-medidor { position: absolute; left: 0; top: 0; visibility: hidden; pointer-events: none; }
+.pg-medidor .folha { position: absolute; left: 0; top: 0; }
+.pg-bloco { display: flow-root; }
+/* Bloco que abre a folha não carrega o espaço de cima */
+.conteudo > .pg-bloco:first-child > :first-child,
+.conteudo > .pg-bloco:first-child > :first-child > :first-child { margin-top: 0 !important; }
+.conteudo > .pg-bloco:first-child > .linha-taupe { border-top: 0; }
+.pg-numero { margin-left: 1.2em; opacity: 0.8; }
+
+@media print {
+  .pdf-tela { background: none; padding: 0; }
+  .pdf-tela .folha { margin: 0; box-shadow: none; }
+}
+
+/* A4 */
+.a4 .folha { width: 210mm; height: 297mm; }
+.a4 .folha > .conteudo { padding: 34pt 50.5pt 30pt; }
+.a4 .pg-lista { width: calc(210mm - 101pt); }
+.a4 .rodape { bottom: 12pt; font-size: 6.5pt; letter-spacing: 0.02em; }
+
+/* Celular */
+.celular .folha { width: 390px; height: 845px; }
+.celular .folha > .conteudo { padding: 26px 22px 34px; }
+.celular .pg-lista { width: 346px; }
+.celular .rodape { bottom: 12px; font-size: 9px; padding: 0 22px; line-height: 1.25; }
+
+/* ---------------------------------------------------------- peças comuns */
+.pilula { border: 1.5pt solid var(--taupe); border-radius: 999px; }
+.celular .pilula { border-width: 1.5px; }
+.maiusculas { text-transform: uppercase; }
+.direita { text-align: right; }
+.centro { text-align: center; }
+.linha-taupe { border-top: 0.75pt solid var(--taupe); }
+
+.faixa {
+  background: var(--taupe);
+  color: #fff;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+}
+.faixa > div { display: flex; align-items: center; gap: 0.6em; }
+.faixa .rotulo-faixa { text-transform: uppercase; line-height: 1.17; }
+.faixa .parcela { font-weight: 700; text-transform: uppercase; justify-content: center; }
+.faixa .frete { justify-content: flex-end; }
+.faixa .divisor { width: 0.75pt; align-self: stretch; background: var(--linha); }
+.a4 .faixa { height: 43pt; padding: 0 30pt 0 13pt; grid-template-columns: 1fr 0.75pt 1fr 0.75pt auto; column-gap: 20pt; }
+.a4 .faixa .rotulo-faixa { font-size: 9pt; }
+.a4 .faixa .valor { font-size: 15.5pt; }
+.celular .faixa { padding: 10px 12px; grid-template-columns: 1fr auto; row-gap: 6px; column-gap: 10px; }
+.celular .faixa .divisor { display: none; }
+.celular .faixa .rotulo-faixa { font-size: 9px; }
+.celular .faixa .valor { font-size: 13px; }
+.celular .faixa .parcela { grid-column: 1 / -1; order: -1; justify-content: flex-start; font-size: 19px; }
+.celular .faixa .frete { justify-content: flex-end; }
+
+/* Pontos de cor (2 colunas; com número ímpar, o primeiro fica centralizado) */
+.pontos { display: grid; grid-template-columns: repeat(2, auto); justify-content: start; align-content: start; }
+.pontos .ponto { border-radius: 50%; box-shadow: inset 0 0 0 0.6pt rgb(0 0 0 / 0.12); }
+.pontos .ponto.primeiro-impar { grid-column: 1 / -1; justify-self: center; }
+.a4 .pontos { gap: 2.5pt 3.5pt; width: 21pt; }
+.a4 .pontos .ponto { width: 9pt; height: 9pt; }
+.celular .pontos { gap: 3px 4px; width: 24px; }
+.celular .pontos .ponto { width: 10px; height: 10px; }
+
+/* Item */
+.item { border-bottom: 0.75pt solid var(--linha); position: relative; }
+.item-nome { font-weight: 700; }
+.item-corpo { display: flex; align-items: flex-start; }
+.item-texto { flex: 1; }
+.item-valor { position: absolute; right: 0; white-space: nowrap; }
+.a4 .item { padding: 0 0 14pt; margin-bottom: 11pt; }
+.a4 .item-nome { font-size: 17pt; line-height: 21pt; padding-right: 90pt; }
+.a4 .item-corpo { margin-top: 2pt; gap: 0; }
+.a4 .item .pontos { margin-top: 3pt; margin-right: 13pt; }
+.a4 .item-texto { font-size: 11.15pt; line-height: 12.1pt; padding-right: 90pt; }
+.a4 .item-valor { top: 19pt; font-size: 15pt; }
+.celular .item { padding: 0 0 12px; margin-bottom: 12px; }
+.celular .item-nome { font-size: 15px; line-height: 19px; padding-right: 92px; }
+.celular .item-corpo { margin-top: 4px; }
+.celular .item .pontos { margin-top: 2px; margin-right: 10px; }
+.celular .item-texto { font-size: 11px; line-height: 14px; }
+.celular .item-valor { top: 1px; font-size: 13px; }
+
+/* Fechamento do bloco (legenda + faixa + nota) */
+.legenda { display: flex; justify-content: space-between; align-items: flex-start; }
+.legenda .contagem { font-weight: 700; text-transform: uppercase; text-align: right; }
+.a4 .legenda { font-size: 9pt; line-height: 10.5pt; }
+.a4 .fechamento .faixa { margin-top: 40pt; }
+.a4 .nota-legal { margin-top: 9pt; font-size: 6.5pt; line-height: 8pt; text-transform: uppercase; max-width: 260pt; }
+.celular .legenda { font-size: 9px; line-height: 12px; gap: 12px; }
+.celular .fechamento .faixa { margin-top: 18px; }
+.celular .nota-legal { margin-top: 8px; font-size: 9px; line-height: 12px; text-transform: uppercase; }
+
+/* Reservado */
+.titulo-reservado { text-transform: uppercase; }
+.a4 .titulo-reservado { font-size: 14.6pt; line-height: 18pt; margin-top: 46pt; }
+.a4 .nota-reservado { font-size: 10pt; line-height: 13pt; margin: 4pt 0 16pt; }
+.a4 .grupo-reservado .faixa { margin-bottom: 26pt; }
+.celular .titulo-reservado { font-size: 15px; line-height: 19px; margin-top: 26px; }
+.celular .nota-reservado { font-size: 11px; line-height: 14px; margin: 4px 0 14px; }
+.celular .grupo-reservado .faixa { margin-bottom: 18px; }
+.a4 .grupo-reservado { padding-top: 6pt; }
+
+/* ---------------------------------------------------------- oferta A4 (pág. 1, posições do original) */
+.oferta-a4 { position: absolute; inset: 0; }
+.oferta-a4 > * { position: absolute; }
+.oferta-a4 .logo { left: 51pt; top: 47pt; width: 53pt; }
+.oferta-a4 .cab-dir { right: 50.5pt; top: 46pt; font-size: 11pt; line-height: 15pt; text-align: right; }
+.oferta-a4 .cab-linha { left: 51pt; right: 50.5pt; top: 97pt; }
+.oferta-a4 .selo { left: 50.7pt; top: 111.5pt; font-size: 9pt; text-transform: uppercase; }
+.oferta-a4 .preparada { right: 50.5pt; top: 110.6pt; font-size: 9pt; line-height: 12pt; text-transform: uppercase; text-align: right; }
+.oferta-a4 .titulo { left: 50pt; width: 213pt; top: 171.7pt; font-size: 14pt; line-height: 16.5pt; text-align: right; }
+.oferta-a4 .condicoes-titulo { left: 54pt; top: 243.5pt; font-size: 13pt; line-height: 15pt; }
+.oferta-a4 .condicoes { left: 51pt; top: 289pt; width: 190pt; display: flex; flex-direction: column; gap: 9pt; }
+.oferta-a4 .condicao { height: 38pt; padding-left: 17pt; display: flex; flex-direction: column; justify-content: center; }
+.oferta-a4 .condicao-titulo { font-size: 14pt; line-height: 16pt; font-weight: 500; }
+.oferta-a4 .condicao-sub { font-size: 8.2pt; line-height: 10pt; }
+.oferta-a4 .frase { left: 50.7pt; width: 212.2pt; top: 438.9pt; font-size: 13pt; line-height: 15pt; text-align: justify; }
+.oferta-a4 .foto-principal { left: 309pt; top: 175pt; width: 222pt; height: 304pt; border-radius: 16pt; overflow: hidden; }
+.oferta-a4 .foto-principal img { width: 100%; height: 100%; object-fit: cover; object-position: center 25%; }
+.oferta-a4 .legenda-foto { left: 309pt; width: 222pt; top: 487.7pt; font-size: 10pt; line-height: 11.3pt; text-transform: uppercase; text-align: center; }
+.oferta-a4 .polaroide-grande { left: -12pt; top: 516pt; width: 212pt; height: 276pt; transform: rotate(-4deg); background-size: 100% 100%; box-shadow: 0 1pt 4pt rgb(0 0 0 / 0.12); }
+.oferta-a4 .polaroide-grande img { position: absolute; left: 11pt; top: 12pt; width: 190pt; height: 205pt; object-fit: cover; object-position: center 20%; }
+.oferta-a4 .clipe { left: 26pt; top: 525pt; width: 18pt; transform: rotate(-4deg); }
+/* Assinatura dentro da faixa branca da polaroide (gira junto com a moldura) */
+.oferta-a4 .polaroide-grande .assinatura { position: absolute; left: 0; right: 0; top: 229pt; text-align: center; font-size: 23pt; line-height: 1; white-space: nowrap; }
+.oferta-a4 .titulo-secao { font-size: 12.7pt; font-weight: 600; text-transform: uppercase; }
+.oferta-a4 .na-peca-titulo { left: 459.4pt; top: 540.6pt; }
+.oferta-a4 .chips { left: 264pt; top: 572pt; width: 268pt; display: grid; grid-template-columns: 1fr 1fr; gap: 11pt 4pt; }
+.oferta-a4 .chip { height: 24pt; display: flex; align-items: center; justify-content: center; font-size: 9.6pt; font-weight: 500; }
+.oferta-a4 .na-parceria-titulo { left: 430.4pt; top: 647.3pt; }
+.oferta-a4 .cards { left: 360pt; top: 681pt; width: 166pt; display: flex; flex-direction: column; gap: 11pt; }
+.oferta-a4 .card { height: 33pt; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+.oferta-a4 .card-titulo { font-size: 9.6pt; line-height: 11.5pt; font-weight: 500; }
+.oferta-a4 .card-sub { font-size: 7pt; line-height: 8.5pt; }
+
+/* ---------------------------------------------------------- conta do lucro A4 */
+.conta-a4 { position: relative; height: 252pt; }
+.conta-a4 > * { position: absolute; }
+.conta-a4 .conta-titulo { right: 3pt; top: 3pt; font-size: 11pt; text-transform: uppercase; }
+.conta-a4 .lucro { left: 0; top: 27pt; font-size: 16.6pt; line-height: 19.5pt; }
+.conta-a4 .nota-grade { left: 0; top: 77pt; font-size: 11pt; line-height: 12.7pt; }
+.conta-a4 .polaroides { left: 291.5pt; top: 24pt; display: flex; gap: 4pt; }
+.conta-a4 .polaroide { width: 64pt; height: 91pt; background-size: 100% 100%; position: relative; box-shadow: 0 0.5pt 2pt rgb(0 0 0 / 0.1); }
+.conta-a4 .polaroide img { position: absolute; left: 3pt; top: 3.5pt; width: 58pt; height: 68pt; object-fit: cover; object-position: center 20%; }
+.conta-a4 .bandas { left: 0; top: 129pt; width: 205pt; display: flex; flex-direction: column; gap: 4pt; }
+.banda { background: var(--taupe); color: #fff; display: flex; align-items: center; }
+.conta-a4 .banda { height: 36pt; padding-left: 16pt; }
+.conta-a4 .banda-rotulo { width: 85pt; font-size: 10.4pt; line-height: 12pt; text-transform: uppercase; }
+.conta-a4 .banda-valor { font-size: 17.8pt; }
+.conta-a4 .retorno { right: 3pt; top: 129.5pt; font-size: 19.1pt; line-height: 22.5pt; text-align: right; }
+.conta-a4 .nota-estimativa { right: 3pt; top: 226pt; font-size: 9pt; line-height: 10.5pt; text-align: right; text-transform: uppercase; }
+
+.cab-pedido { display: flex; justify-content: space-between; align-items: flex-start; }
+.a4 .cab-pedido { padding-top: 9pt; margin-bottom: 18pt; }
+.a4 .cab-pedido .lema { font-size: 8.7pt; text-transform: uppercase; }
+.a4 .cab-pedido .titulo-pedido { font-size: 18pt; line-height: 18pt; text-align: right; padding-top: 6pt; }
+
+/* ---------------------------------------------------------- oferta e conta no celular */
+.celular .cab-cel { display: flex; justify-content: space-between; align-items: flex-start; padding-bottom: 10px; border-bottom: 0.75px solid var(--taupe); }
+.celular .cab-cel .logo { width: 52px; }
+.celular .cab-cel .cab-dir { font-size: 11px; line-height: 14px; text-align: right; }
+.celular .linha-meta { display: flex; justify-content: space-between; font-size: 9px; line-height: 12px; text-transform: uppercase; margin-top: 8px; }
+.celular .titulo-oferta { font-size: 20px; line-height: 24px; margin-top: 26px; }
+.celular .condicoes-titulo { font-size: 14px; line-height: 17px; margin-top: 20px; }
+.celular .condicoes { display: flex; flex-direction: column; gap: 8px; margin-top: 12px; }
+.celular .condicao { padding: 7px 18px; }
+.celular .condicao-titulo { font-size: 15px; line-height: 19px; font-weight: 500; }
+.celular .condicao-sub { font-size: 10px; line-height: 13px; }
+.celular .frase { font-size: 14px; line-height: 18px; margin-top: 20px; }
+.celular .foto-cel { margin-top: 20px; height: 380px; border-radius: 18px; overflow: hidden; }
+.celular .foto-cel img { width: 100%; height: 100%; object-fit: cover; object-position: center 25%; }
+.celular .legenda-foto { font-size: 11px; line-height: 14px; text-transform: uppercase; text-align: center; margin-top: 8px; }
+.celular .secao-cel { margin-top: 8px; position: relative; }
+.celular .secao-cel .titulo-secao { position: relative; font-size: 14px; font-weight: 600; text-transform: uppercase; text-align: right; padding: 6px 12px 12px 0; }
+.celular .chips { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.celular .chip { padding: 7px 4px; text-align: center; font-size: 11px; font-weight: 500; }
+.celular .cards { display: flex; flex-direction: column; gap: 8px; }
+.celular .card { padding: 7px 12px; text-align: center; }
+.celular .card-titulo { font-size: 12px; line-height: 15px; font-weight: 500; }
+.celular .card-sub { font-size: 9.5px; line-height: 12px; }
+.celular .assinatura { font-size: 28px; line-height: 1; margin-top: 18px; text-align: center; }
+
+.celular .conta-titulo { font-size: 11px; text-transform: uppercase; text-align: right; }
+.celular .lucro { font-size: 19px; line-height: 23px; margin-top: 6px; }
+.celular .nota-grade { font-size: 11px; line-height: 14px; margin-top: 6px; }
+.celular .polaroides { display: flex; gap: 6px; justify-content: center; margin-top: 14px; }
+.celular .polaroide { width: 96px; height: 136px; background-size: 100% 100%; position: relative; box-shadow: 0 1px 3px rgb(0 0 0 / 0.1); }
+.celular .polaroide img { position: absolute; left: 4px; top: 5px; width: 88px; height: 102px; object-fit: cover; object-position: center 20%; }
+.celular .bandas { display: flex; flex-direction: column; gap: 4px; margin-top: 16px; }
+.celular .banda { padding: 10px 14px; justify-content: space-between; }
+.celular .banda-rotulo { font-size: 10px; line-height: 12px; text-transform: uppercase; }
+.celular .banda-valor { font-size: 20px; }
+.celular .retorno { font-size: 17px; line-height: 21px; margin-top: 16px; text-align: right; }
+.celular .nota-estimativa { font-size: 9px; line-height: 12px; margin-top: 8px; text-align: right; text-transform: uppercase; }
+.celular .cab-pedido { padding-top: 8px; margin-bottom: 14px; align-items: flex-end; }
+.celular .cab-pedido .lema { font-size: 9px; text-transform: uppercase; }
+.celular .cab-pedido .titulo-pedido { font-size: 17px; line-height: 19px; text-align: right; padding-top: 6px; }
+
+/* ---------------------------------------------------------- pedido confirmado */
+.cab-conf .topo { display: flex; justify-content: space-between; align-items: flex-start; }
+.cab-conf .meta { display: flex; justify-content: space-between; text-transform: uppercase; }
+.cab-conf .selo-conf { display: inline-flex; align-items: center; font-weight: 600; }
+.a4 .cab-conf .logo { width: 53pt; margin-top: 13pt; }
+.a4 .cab-conf .cab-dir { font-size: 11pt; line-height: 15pt; text-align: right; padding-top: 12pt; }
+.a4 .cab-conf .linha-taupe { margin-top: 20pt; }
+.a4 .cab-conf .meta { font-size: 9pt; line-height: 12pt; margin-top: 13pt; }
+.a4 .cab-conf .selo-conf { margin-top: 40pt; padding: 6pt 16pt; font-size: 11pt; }
+.a4 .cab-conf .titulo-conf { font-size: 22pt; line-height: 26pt; margin-top: 14pt; }
+.a4 .cab-conf .sub-conf { font-size: 12pt; line-height: 15pt; margin-top: 8pt; margin-bottom: 30pt; }
+.a4 .titulo-secao-conf { font-size: 14.6pt; line-height: 18pt; text-transform: uppercase; margin-bottom: 14pt; }
+.a4 .nota-despacho { margin-top: 9pt; font-size: 9pt; }
+.celular .cab-conf .logo { width: 52px; }
+.celular .cab-conf .cab-dir { font-size: 11px; line-height: 14px; text-align: right; }
+.celular .cab-conf .linha-taupe { margin-top: 12px; }
+.celular .cab-conf .meta { font-size: 9px; line-height: 12px; margin-top: 8px; gap: 8px; }
+.celular .cab-conf .selo-conf { margin-top: 24px; padding: 6px 14px; font-size: 12px; }
+.celular .cab-conf .titulo-conf { font-size: 22px; line-height: 26px; margin-top: 12px; }
+.celular .cab-conf .sub-conf { font-size: 13px; line-height: 17px; margin-top: 8px; margin-bottom: 22px; }
+.celular .titulo-secao-conf { font-size: 15px; line-height: 19px; text-transform: uppercase; margin-bottom: 12px; }
+.celular .nota-despacho { margin-top: 8px; font-size: 10px; line-height: 13px; }
+
+.pagamentos { display: grid; }
+.pagamento { display: flex; flex-direction: column; }
+.pagamento.agora { background: var(--taupe); color: #fff; }
+.pagamento.chegada { border: 1.5pt solid var(--taupe); }
+.pagamento .pag-rotulo { text-transform: uppercase; }
+.pagamento .pag-parcela { font-weight: 700; text-transform: uppercase; }
+.a4 .bloco-pagamentos { margin-top: 30pt; }
+.a4 .pagamentos { grid-template-columns: repeat(auto-fit, minmax(150pt, 1fr)); gap: 10pt; }
+.a4 .pagamento { padding: 14pt 16pt; border-radius: 12pt; gap: 3pt; }
+.a4 .pagamento .pag-rotulo { font-size: 9pt; }
+.a4 .pagamento .pag-parcela { font-size: 20pt; line-height: 24pt; }
+.a4 .pagamento .pag-total { font-size: 10pt; }
+.celular .bloco-pagamentos { margin-top: 18px; }
+.celular .pagamentos { grid-template-columns: 1fr; gap: 8px; }
+.celular .pagamento { padding: 12px 14px; border-radius: 12px; gap: 2px; }
+.celular .pagamento .pag-rotulo { font-size: 9px; }
+.celular .pagamento .pag-parcela { font-size: 20px; line-height: 24px; }
+.celular .pagamento .pag-total { font-size: 11px; }
+
+.passos { display: flex; flex-direction: column; }
+.passo { display: flex; align-items: center; }
+.passo .numero { border-radius: 50%; border: 1.5pt solid var(--taupe); display: flex; align-items: center; justify-content: center; font-weight: 700; flex-shrink: 0; }
+.a4 .bloco-passos { margin-top: 30pt; }
+.a4 .passos { gap: 10pt; }
+.a4 .passo { gap: 12pt; font-size: 11.5pt; line-height: 14pt; }
+.a4 .passo .numero { width: 24pt; height: 24pt; font-size: 11pt; }
+.celular .bloco-passos { margin-top: 22px; }
+.celular .passos { gap: 10px; }
+.celular .passo { gap: 10px; font-size: 12px; line-height: 15px; }
+.celular .passo .numero { width: 26px; height: 26px; font-size: 12px; }
+
+.completo { display: flex; justify-content: space-between; align-items: flex-end; }
+.completo .rot { text-transform: uppercase; }
+.botao-pdf { display: block; background: var(--taupe); color: #fff; text-align: center; font-weight: 600; border-radius: 999px; text-decoration: none; }
+.a4 .bloco-completo { margin-top: 30pt; padding-top: 16pt; border-top: 0.75pt solid var(--taupe); }
+.a4 .completo .rot { font-size: 9pt; }
+.a4 .completo .val { font-size: 18pt; line-height: 22pt; }
+.a4 .completo .sub { font-size: 9.5pt; }
+.a4 .botao-pdf { margin: 22pt auto 0; width: 300pt; padding: 12pt; font-size: 12.5pt; }
+.celular .bloco-completo { margin-top: 22px; padding-top: 14px; border-top: 0.75px solid var(--taupe); }
+.celular .completo .rot { font-size: 9px; }
+.celular .completo .val { font-size: 18px; line-height: 22px; }
+.celular .completo .sub { font-size: 10px; }
+.celular .botao-pdf { margin-top: 18px; padding: 12px; font-size: 13px; }
+
+/* Ícone de check */
+.check { display: inline-block; width: 0.85em; height: 0.85em; flex-shrink: 0; }
+.condicao-linha { display: flex; align-items: center; gap: 0.3em; }
+.selo-conf .check { margin-right: 0.4em; }
+.celular .secao-cel { margin-top: 16px; }
+
+/* Pedido confirmado: mais compacto (2 páginas no padrão) */
+.a4.compacto .item { padding-bottom: 7pt; margin-bottom: 7pt; }
+.a4.compacto .item-nome { font-size: 14.5pt; line-height: 17pt; }
+.a4.compacto .item-valor { top: 15pt; font-size: 14pt; }
+.a4.compacto .fechamento .faixa { margin-top: 18pt; }
+.a4.compacto .cab-conf .logo { margin-top: 0; }
+.a4.compacto .cab-conf .cab-dir { padding-top: 0; }
+.a4.compacto .cab-conf .linha-taupe { margin-top: 14pt; }
+.a4.compacto .cab-conf .meta { margin-top: 9pt; }
+.a4.compacto .cab-conf .selo-conf { margin-top: 18pt; }
+.a4.compacto .cab-conf .titulo-conf { font-size: 20pt; line-height: 24pt; margin-top: 10pt; }
+.a4.compacto .cab-conf .sub-conf { margin-bottom: 14pt; }
+.a4.compacto .titulo-secao-conf { margin-bottom: 10pt; }
+.a4.compacto .titulo-reservado { margin-top: 26pt; }
+.a4.compacto .bloco-pagamentos, .a4.compacto .bloco-passos { margin-top: 22pt; }
+.a4.compacto .bloco-completo { margin-top: 22pt; }
+
+/* Pré-visualização no editor do modelo */
+.previa-pdf { position: relative; }
+.previa-pdf .folha { margin: 0 auto 16px; box-shadow: 0 2px 12px rgb(0 0 0 / 0.12); }
